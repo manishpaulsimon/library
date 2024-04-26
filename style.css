@@ -1,0 +1,22 @@
+.main-container {
+    font-family: roboto;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+dialog {
+    border: solid 1px #000;
+    padding: 10px;
+  }
+
+.new-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e2e8f0;
+}
