@@ -21,8 +21,10 @@ header {
     flex-direction: column;
     gap: 20px;
 
+
     justify-content: center;
     align-items: center;
+
 }
 
 dialog {
@@ -72,6 +74,9 @@ dialog {
     justify-content: center;
     gap: 40px;
     padding-top: 40px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+
 }
 
 .sub-container {

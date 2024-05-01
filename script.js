@@ -1,39 +1,39 @@
+const container = document.querySelector('.container');
 
+// Toggle Read and remove functinalities
 
-// Toggle have-read and not-read buttons
-const haveReadButtons = document.querySelectorAll('.have-read');
-haveReadButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    if (button.classList.contains('have-read')) {
-      button.textContent = 'Not Read';
-      button.classList.remove('have-read');
-      button.classList.add('not-read')
+document.addEventListener('DOMContentLoaded', () => {
+
+  container.addEventListener('click', (event) => {
+    // Check if the clicked element is a button that should toggle read state
+    if (event.target.classList.contains('have-read') || event.target.classList.contains('not-read')) {
+      toggleReadState(event.target);
     }
-    else if (button.classList.contains('not-read')) {
-      button.textContent = 'Have Read';
-      button.classList.remove('not-read')
-      button.classList.add('have-read');
+
+    if (event.target.classList.contains('remove')) {
+      const subContainer = event.target.closest('.sub-container');
+      // remove the sub-container
+      if (subContainer) {
+        subContainer.remove();
+      }
     }
   });
-});
-
-// remove sub-container when clicking on remove button
-const removeButtons = document.querySelectorAll('.remove')
-removeButtons.forEach((removeBtn) => {
-  removeBtn.addEventListener('click', (e) => {   
-    // navigate the DOM tree to find the closest sub-container 
-    const subContainer = removeBtn.closest('.sub-container');
-
-    // remove the sub-container
-    if (subContainer) {
-      subContainer.remove();
-    }
-  })
 })
 
+function toggleReadState(clickedButton) {
+  if (clickedButton.classList.contains('have-read')) {
+    clickedButton.textContent = 'Not Read';
+    clickedButton.classList.remove('have-read');
+    clickedButton.classList.add('not-read')
+  }
+  else if (clickedButton.classList.contains('not-read')) {
+    clickedButton.textContent = 'Have Read';
+    clickedButton.classList.remove('not-read')
+    clickedButton.classList.add('have-read');
+  }
+}
 
 // Add Book to Library
-
 // Show form when clicking on 'addBookButton'
 const addBookButton = document.getElementById('add-button');
 const form = document.getElementById('new-form');
@@ -45,7 +45,7 @@ addBookButton.addEventListener('click', () => {
   mainContainer.appendChild(overlay);
 });
 
-// remove form on tapping on escape
+// remove form when tapping on escape
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     form.style.visibility = 'hidden';
@@ -55,62 +55,72 @@ document.addEventListener('keydown', (e) => {
 
 // remove form by clicking outside
 document.addEventListener('click', (e) => {
-  if (form.style.visibility === 'visible' &&!form.contains(event.target) && !addBookButton.contains(event.target)) {
+  if (form.style.visibility === 'visible' &&!form.contains(e.target) && !addBookButton.contains(e.target)) {
     form.style.visibility = 'hidden';
     document.querySelector('.overlay').remove();
   }
 })
 
+// Submit form to library when clicking on submit
+const submitBtn = document.querySelector('.submit-btn');
+submitBtn.addEventListener('click', (e) => {
+  e.preventDefault();
 
+  const newSubContainer = document.createElement('div');
+  newSubContainer.classList.add('sub-container');
 
+  // query select the forms
+  const titleText = document.getElementById('title').value;
+  const authorText = document.getElementById('author').value;
+  const numberOfPages = document.getElementById('pages').value;
+  const isReadChecked = document.getElementById('checkbox').checked;
 
-
-
-
-
-
-// const myLibrary = ['Harry Potter','The God of Small Things'];
-
-
-// function Book() {
-//   let isDialogOpen = false; // Track if the dialog is open
-
-//   // Add event listener to the open button to show dialog box
-//   addBookButton.addEventListener('click', () => {
-
-//     if (isDialogOpen) return; // Prevent opening multiple dialogs
-//     isDialogOpen = true;
-
-//     const newDialog = document.createElement('dialog');
-//     newDialog.classList.add('new-dialog');
-
-//     // Create a new Div to append books to it
-//     myLibrary.forEach(book => {
-//       const newDiv = document.createElement('div');
-//       newDiv.textContent = book;
-//       newDialog.appendChild(newDiv);
-//     });    
-
-//     // Create close button to close the newly created dialog box
-//     const closeButton = document.createElement('button');
-//     closeButton.textContent = 'Close';
-//     closeButton.addEventListener('click',() => {
-//       console.log("Attempting to close the dialog");
-
-//       newDialog.close();
-//       isDialogOpen = false;
-//     }); 
-
-//     newDialog.appendChild(closeButton);
-//     document.body.appendChild(newDialog);
-//     newDialog.showModal();
-
-//   });
-// }
-
-// Book();
-
-// function addBookToLibrary() {
-//   // Create Dialog element and append information to it
   
-// }
+  // Create the various inputs for the new form
+  const title = document.createElement('h1');
+  title.classList.add('title');
+  title.textContent = titleText;
+
+  const author = document.createElement('p');
+  author.classList.add('author');
+  author.textContent = authorText;
+
+  const pages = document.createElement('p');
+  pages.classList.add('pages')
+  pages.textContent = numberOfPages;
+
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('button-list');
+
+  const haveReadButton = document.createElement('button');
+  if (isReadChecked) {
+    haveReadButton.classList.add('not-read');
+    haveReadButton.textContent = 'Not Read';
+  } else {
+    haveReadButton.classList.add('have-read');
+    haveReadButton.textContent = 'Have Read';
+  }
+
+  const removeButton = document.createElement('button');
+  removeButton.classList.add('remove');
+  removeButton.textContent = 'Remove';
+
+
+  // append buttons to newDIV
+  newDiv.appendChild(haveReadButton);
+  newDiv.appendChild(removeButton);
+
+  // append children to newSubContainer
+  newSubContainer.appendChild(title);
+  newSubContainer.appendChild(author);
+  newSubContainer.appendChild(pages);
+  newSubContainer.appendChild(newDiv);
+
+  // append subcontainer to container
+  container.appendChild(newSubContainer);
+
+  // hide form when clicking on submit
+  form.style.visibility = 'hidden';
+  document.querySelector('.overlay').remove();
+
+})
