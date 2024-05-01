@@ -66,6 +66,8 @@ const submitBtn = document.querySelector('.submit-btn');
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
+   
+
   const newSubContainer = document.createElement('div');
   newSubContainer.classList.add('sub-container');
 
@@ -74,6 +76,12 @@ submitBtn.addEventListener('click', (e) => {
   const authorText = document.getElementById('author').value;
   const numberOfPages = document.getElementById('pages').value;
   const isReadChecked = document.getElementById('checkbox').checked;
+
+   // Validate inputs
+   if (!titleText || !authorText || !numberOfPages) {
+    alert("Please fill in all required fields.");
+    return; // Stop the function if any field is empty
+  }
 
   
   // Create the various inputs for the new form
@@ -122,5 +130,4 @@ submitBtn.addEventListener('click', (e) => {
   // hide form when clicking on submit
   form.style.visibility = 'hidden';
   document.querySelector('.overlay').remove();
-
 })
