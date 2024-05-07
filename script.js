@@ -1,7 +1,6 @@
 const container = document.querySelector('.container');
 
 // Toggle Read and remove functinalities
-
 document.addEventListener('DOMContentLoaded', () => {
 
   container.addEventListener('click', (event) => {
@@ -33,101 +32,210 @@ function toggleReadState(clickedButton) {
   }
 }
 
-// Add Book to Library
-// Show form when clicking on 'addBookButton'
-const addBookButton = document.getElementById('add-button');
-const form = document.getElementById('new-form');
-addBookButton.addEventListener('click', () => {
-  form.style.visibility = 'visible';
-  const mainContainer = document.querySelector('.main-container');
-  const overlay = document.createElement('div');
-  overlay.classList.add('overlay');
-  mainContainer.appendChild(overlay);
-});
-
-// remove form when tapping on escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    form.style.visibility = 'hidden';
-    document.querySelector('.overlay').remove();
+class Library {
+  constructor() {
+    this.library = [];
   }
-})
-
-// remove form by clicking outside
-document.addEventListener('click', (e) => {
-  if (form.style.visibility === 'visible' &&!form.contains(e.target) && !addBookButton.contains(e.target)) {
-    form.style.visibility = 'hidden';
-    document.querySelector('.overlay').remove();
+  addBooks() {
+    const addBookButton = document.getElementById('add-button');
+    const form = document.getElementById('new-form');
+    addBookButton.addEventListener('click', () => {
+    form.style.visibility = 'visible';
+    const mainContainer = document.querySelector('.main-container');
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    mainContainer.appendChild(overlay);
+    });
   }
-})
+  removeBooks() {
+    // remove form when tapping on escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        form.style.visibility = 'hidden';
+        document.querySelector('.overlay').remove();
+      }
+    })
 
-// Submit form to library when clicking on submit
-const submitBtn = document.querySelector('.submit-btn');
-submitBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+    // remove form by clicking outside
+    document.addEventListener('click', (e) => {
+      if (form.style.visibility === 'visible' &&!form.contains(e.target) && !addBookButton.contains(e.target)) {
+        form.style.visibility = 'hidden';
+        document.querySelector('.overlay').remove();
+      }
+    })
+  }
+
+  submitBooks() {
+    // Submit form to library when clicking on submit
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
 
    
 
-  const newSubContainer = document.createElement('div');
-  newSubContainer.classList.add('sub-container');
+    const newSubContainer = document.createElement('div');
+    newSubContainer.classList.add('sub-container');
 
-  // query select the forms
-  const titleText = document.getElementById('title').value;
-  const authorText = document.getElementById('author').value;
-  const numberOfPages = document.getElementById('pages').value;
-  const isReadChecked = document.getElementById('checkbox').checked;
+    // query select the forms
+    const titleText = document.getElementById('title').value;
+    const authorText = document.getElementById('author').value;
+    const numberOfPages = document.getElementById('pages').value;
+    const isReadChecked = document.getElementById('checkbox').checked;
 
-   // Validate inputs
-   if (!titleText || !authorText || !numberOfPages) {
-    alert("Please fill in all required fields.");
-    return; // Stop the function if any field is empty
-  }
+    // Validate inputs
+    if (!titleText || !authorText || !numberOfPages) {
+        alert("Please fill in all required fields.");
+        return; // Stop the function if any field is empty
+      }
 
   
-  // Create the various inputs for the new form
-  const title = document.createElement('h1');
-  title.classList.add('title');
-  title.textContent = titleText;
+      // Create the various inputs for the new form
+      const title = document.createElement('h1');
+      title.classList.add('title');
+      title.textContent = titleText;
 
-  const author = document.createElement('p');
-  author.classList.add('author');
-  author.textContent = authorText;
+      const author = document.createElement('p');
+      author.classList.add('author');
+      author.textContent = authorText;
 
-  const pages = document.createElement('p');
-  pages.classList.add('pages')
-  pages.textContent = numberOfPages;
+      const pages = document.createElement('p');
+      pages.classList.add('pages')
+      pages.textContent = numberOfPages;
 
-  const newDiv = document.createElement('div');
-  newDiv.classList.add('button-list');
+      const newDiv = document.createElement('div');
+      newDiv.classList.add('button-list');
 
-  const haveReadButton = document.createElement('button');
-  if (isReadChecked) {
-    haveReadButton.classList.add('not-read');
-    haveReadButton.textContent = 'Not Read';
-  } else {
-    haveReadButton.classList.add('have-read');
-    haveReadButton.textContent = 'Have Read';
+      const haveReadButton = document.createElement('button');
+      if (isReadChecked) {
+        haveReadButton.classList.add('not-read');
+        haveReadButton.textContent = 'Not Read';
+      } else {
+        haveReadButton.classList.add('have-read');
+        haveReadButton.textContent = 'Have Read';
+      }
+
+      const removeButton = document.createElement('button');
+      removeButton.classList.add('remove');
+      removeButton.textContent = 'Remove';
+
+
+      // append buttons to newDIV
+      newDiv.appendChild(haveReadButton);
+      newDiv.appendChild(removeButton);
+
+      // append children to newSubContainer
+      newSubContainer.appendChild(title);
+      newSubContainer.appendChild(author);
+      newSubContainer.appendChild(pages);
+      newSubContainer.appendChild(newDiv);
+
+      // append subcontainer to container
+      container.appendChild(newSubContainer);
+
+      // hide form when clicking on submit
+      form.style.visibility = 'hidden';
+      document.querySelector('.overlay').remove();
+    })
+
   }
-
-  const removeButton = document.createElement('button');
-  removeButton.classList.add('remove');
-  removeButton.textContent = 'Remove';
+}
 
 
-  // append buttons to newDIV
-  newDiv.appendChild(haveReadButton);
-  newDiv.appendChild(removeButton);
+// // Add Book to Library
+// // Show form when clicking on 'addBookButton'
+// const addBookButton = document.getElementById('add-button');
+// const form = document.getElementById('new-form');
+// addBookButton.addEventListener('click', () => {
+//   form.style.visibility = 'visible';
+//   const mainContainer = document.querySelector('.main-container');
+//   const overlay = document.createElement('div');
+//   overlay.classList.add('overlay');
+//   mainContainer.appendChild(overlay);
+// });
 
-  // append children to newSubContainer
-  newSubContainer.appendChild(title);
-  newSubContainer.appendChild(author);
-  newSubContainer.appendChild(pages);
-  newSubContainer.appendChild(newDiv);
+// // remove form when tapping on escape
+// document.addEventListener('keydown', (e) => {
+//   if (e.key === 'Escape') {
+//     form.style.visibility = 'hidden';
+//     document.querySelector('.overlay').remove();
+//   }
+// })
 
-  // append subcontainer to container
-  container.appendChild(newSubContainer);
+// // remove form by clicking outside
+// document.addEventListener('click', (e) => {
+//   if (form.style.visibility === 'visible' &&!form.contains(e.target) && !addBookButton.contains(e.target)) {
+//     form.style.visibility = 'hidden';
+//     document.querySelector('.overlay').remove();
+//   }
+// })
 
-  // hide form when clicking on submit
-  form.style.visibility = 'hidden';
-  document.querySelector('.overlay').remove();
-})
+// // Submit form to library when clicking on submit
+// const submitBtn = document.querySelector('.submit-btn');
+// submitBtn.addEventListener('click', (e) => {
+//   e.preventDefault();
+
+   
+
+//   const newSubContainer = document.createElement('div');
+//   newSubContainer.classList.add('sub-container');
+
+//   // query select the forms
+//   const titleText = document.getElementById('title').value;
+//   const authorText = document.getElementById('author').value;
+//   const numberOfPages = document.getElementById('pages').value;
+//   const isReadChecked = document.getElementById('checkbox').checked;
+
+//    // Validate inputs
+//    if (!titleText || !authorText || !numberOfPages) {
+//     alert("Please fill in all required fields.");
+//     return; // Stop the function if any field is empty
+//   }
+
+  
+//   // Create the various inputs for the new form
+//   const title = document.createElement('h1');
+//   title.classList.add('title');
+//   title.textContent = titleText;
+
+//   const author = document.createElement('p');
+//   author.classList.add('author');
+//   author.textContent = authorText;
+
+//   const pages = document.createElement('p');
+//   pages.classList.add('pages')
+//   pages.textContent = numberOfPages;
+
+//   const newDiv = document.createElement('div');
+//   newDiv.classList.add('button-list');
+
+//   const haveReadButton = document.createElement('button');
+//   if (isReadChecked) {
+//     haveReadButton.classList.add('not-read');
+//     haveReadButton.textContent = 'Not Read';
+//   } else {
+//     haveReadButton.classList.add('have-read');
+//     haveReadButton.textContent = 'Have Read';
+//   }
+
+//   const removeButton = document.createElement('button');
+//   removeButton.classList.add('remove');
+//   removeButton.textContent = 'Remove';
+
+
+//   // append buttons to newDIV
+//   newDiv.appendChild(haveReadButton);
+//   newDiv.appendChild(removeButton);
+
+//   // append children to newSubContainer
+//   newSubContainer.appendChild(title);
+//   newSubContainer.appendChild(author);
+//   newSubContainer.appendChild(pages);
+//   newSubContainer.appendChild(newDiv);
+
+//   // append subcontainer to container
+//   container.appendChild(newSubContainer);
+
+//   // hide form when clicking on submit
+//   form.style.visibility = 'hidden';
+//   document.querySelector('.overlay').remove();
+// })
