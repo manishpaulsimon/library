@@ -90,25 +90,27 @@ submitBtn.addEventListener("click", (e) => {
   if (!authorText.checkValidity()) {
     document.getElementById("authorError").textContent =
       authorText.validationMessage;
+    return; // Stop the function if any field is empty
   }
 
   if (!numberOfPages.checkValidity()) {
     document.getElementById("pagesError").textContent =
       numberOfPages.validationMessage;
+    return; // Stop the function if any field is empty
   }
 
   // Create the various inputs for the new form
   const title = document.createElement("h1");
   title.classList.add("title");
-  title.textContent = titleText;
+  title.textContent = titleText.value;
 
   const author = document.createElement("p");
   author.classList.add("author");
-  author.textContent = authorText;
+  author.textContent = authorText.value;
 
   const pages = document.createElement("p");
   pages.classList.add("pages");
-  pages.textContent = numberOfPages;
+  pages.textContent = numberOfPages.value;
 
   const newDiv = document.createElement("div");
   newDiv.classList.add("button-list");
