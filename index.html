@@ -1,76 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="header">
-        <h1 class="logo">Library</h1>
-        <p class="author">Designed by Manish</p>
+      <h1 class="logo">Library</h1>
+      <p class="author">Designed by Manish</p>
     </header>
     <div class="main-container">
-        <!-- <div class="overlay"></div> -->
-        <button id="add-button">+ Add Book</button>
-        <div class="container">
-            <div class="sub-container">
-                <h1 class="title">The God of Small Things
-                </h1>
-                <p class="author">Arundhati Roy</p>
-                <p class="pages">340 pages</p>
-                <div class="button-list">
-                    <button class="have-read">Have Read</button>
-                    <button class="remove">Remove</button>
-                </div>
-            </div>
-            <div class="sub-container">
-                <h1 class="title">The White Tiger
-                </h1>
-                <p class="author">Aravind Adiga</p>
-                <p class="pages">318 pages</p>
-                <div class="button-list">
-                    <button class="have-read">Have Read</button>
-                    <button class="remove">Remove</button>
-                </div>
-            </div>
-            <div class="sub-container">
-                <h1 class="title">The Namesake
-                </h1>
-                <p class="author">Jhumpa Lahiri</p>
-                <p class="pages">304 pages</p>
-                <div class="button-list">
-                    <button class="have-read">Have Read</button>
-                    <button class="remove">Remove</button>
-                </div>
-            </div>
+      <!-- <div class="overlay"></div> -->
+      <button id="add-button">+ Add Book</button>
+      <div class="container">
+        <div class="sub-container">
+          <h1 class="title">The God of Small Things</h1>
+          <p class="author">Arundhati Roy</p>
+          <p class="pages">340 pages</p>
+          <div class="button-list">
+            <button class="have-read">Have Read</button>
+            <button class="remove">Remove</button>
+          </div>
         </div>
-        <div class="new-form">
-            <form id="new-form">
-                <legend class="form-title">Add New Book</legend>
-                <div class="sub-form">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" id="title" required placeholder="Enter title">
-                </div>
-                <div class="sub-form">
-                    <label for="author">Author</label>
-                    <input type="text" name="author" id="author" required placeholder="Enter Author">
-                </div>
-                <div class="sub-form">
-                    <label for="pages">Number Of Pages</label>
-                    <input type="number" name="number" id="pages" required placeholder="No. of Pages">
-                </div>
-                <div class="checkbox-form">
-                    <label for="checkbox">Have Read</label>
-                    <input type="checkbox" name="checkbox" id="checkbox">
-                </div>
-                <button type='button' class="submit-btn">Submit</button>
-            </form>
+        <div class="sub-container">
+          <h1 class="title">The White Tiger</h1>
+          <p class="author">Aravind Adiga</p>
+          <p class="pages">318 pages</p>
+          <div class="button-list">
+            <button class="have-read">Have Read</button>
+            <button class="remove">Remove</button>
+          </div>
         </div>
+        <div class="sub-container">
+          <h1 class="title">The Namesake</h1>
+          <p class="author">Jhumpa Lahiri</p>
+          <p class="pages">304 pages</p>
+          <div class="button-list">
+            <button class="have-read">Have Read</button>
+            <button class="remove">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="new-form">
+        <form id="new-form">
+          <legend class="form-title">Add New Book</legend>
+          <div class="sub-form">
+            <label for="title">Title</label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              required
+              placeholder="Enter title"
+            />
+            <span id="titleError" class="error-message"></span>
+          </div>
+          <div class="sub-form">
+            <label for="author">Author</label>
+            <input
+              type="text"
+              name="author"
+              id="author"
+              required
+              placeholder="Enter Author"
+            />
+            <span id="authorError" class="error-message"></span>
+          </div>
+          <div class="sub-form">
+            <label for="pages">Number Of Pages</label>
+            <input
+              type="number"
+              name="number"
+              id="pages"
+              required
+              placeholder="No. of Pages"
+            />
+            <span id="pagesError" class="error-message"></span>
+          </div>
+          <div class="checkbox-form">
+            <label for="checkbox">Have Read</label>
+            <input type="checkbox" name="checkbox" id="checkbox" />
+            <span id="checkboxError" class="error-message"></span>
+          </div>
+
+          <button type="button" class="submit-btn">Submit</button>
+        </form>
+      </div>
     </div>
 
-    
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

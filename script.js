@@ -1,118 +1,130 @@
-const container = document.querySelector('.container');
+const container = document.querySelector(".container");
 
 // Toggle Read and remove functinalities
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  container.addEventListener('click', (event) => {
+document.addEventListener("DOMContentLoaded", () => {
+  container.addEventListener("click", (event) => {
     // Check if the clicked element is a button that should toggle read state
-    if (event.target.classList.contains('have-read') || event.target.classList.contains('not-read')) {
+    if (
+      event.target.classList.contains("have-read") ||
+      event.target.classList.contains("not-read")
+    ) {
       toggleReadState(event.target);
     }
 
-    if (event.target.classList.contains('remove')) {
-      const subContainer = event.target.closest('.sub-container');
+    if (event.target.classList.contains("remove")) {
+      const subContainer = event.target.closest(".sub-container");
       // remove the sub-container
       if (subContainer) {
         subContainer.remove();
       }
     }
   });
-})
+});
 
 function toggleReadState(clickedButton) {
-  if (clickedButton.classList.contains('have-read')) {
-    clickedButton.textContent = 'Not Read';
-    clickedButton.classList.remove('have-read');
-    clickedButton.classList.add('not-read')
-  }
-  else if (clickedButton.classList.contains('not-read')) {
-    clickedButton.textContent = 'Have Read';
-    clickedButton.classList.remove('not-read')
-    clickedButton.classList.add('have-read');
+  if (clickedButton.classList.contains("have-read")) {
+    clickedButton.textContent = "Not Read";
+    clickedButton.classList.remove("have-read");
+    clickedButton.classList.add("not-read");
+  } else if (clickedButton.classList.contains("not-read")) {
+    clickedButton.textContent = "Have Read";
+    clickedButton.classList.remove("not-read");
+    clickedButton.classList.add("have-read");
   }
 }
 
 // Add Book to Library
 // Show form when clicking on 'addBookButton'
-const addBookButton = document.getElementById('add-button');
-const form = document.getElementById('new-form');
-addBookButton.addEventListener('click', () => {
-  form.style.visibility = 'visible';
-  const mainContainer = document.querySelector('.main-container');
-  const overlay = document.createElement('div');
-  overlay.classList.add('overlay');
+const addBookButton = document.getElementById("add-button");
+const form = document.getElementById("new-form");
+addBookButton.addEventListener("click", () => {
+  form.style.visibility = "visible";
+  const mainContainer = document.querySelector(".main-container");
+  const overlay = document.createElement("div");
+  overlay.classList.add("overlay");
   mainContainer.appendChild(overlay);
 });
 
 // remove form when tapping on escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    form.style.visibility = 'hidden';
-    document.querySelector('.overlay').remove();
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    form.style.visibility = "hidden";
+    document.querySelector(".overlay").remove();
   }
-})
+});
 
 // remove form by clicking outside
-document.addEventListener('click', (e) => {
-  if (form.style.visibility === 'visible' &&!form.contains(e.target) && !addBookButton.contains(e.target)) {
-    form.style.visibility = 'hidden';
-    document.querySelector('.overlay').remove();
+document.addEventListener("click", (e) => {
+  if (
+    form.style.visibility === "visible" &&
+    !form.contains(e.target) &&
+    !addBookButton.contains(e.target)
+  ) {
+    form.style.visibility = "hidden";
+    document.querySelector(".overlay").remove();
   }
-})
+});
 
 // Submit form to library when clicking on submit
-const submitBtn = document.querySelector('.submit-btn');
-submitBtn.addEventListener('click', (e) => {
+const submitBtn = document.querySelector(".submit-btn");
+submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-   
-
-  const newSubContainer = document.createElement('div');
-  newSubContainer.classList.add('sub-container');
+  const newSubContainer = document.createElement("div");
+  newSubContainer.classList.add("sub-container");
 
   // query select the forms
-  const titleText = document.getElementById('title').value;
-  const authorText = document.getElementById('author').value;
-  const numberOfPages = document.getElementById('pages').value;
-  const isReadChecked = document.getElementById('checkbox').checked;
+  const titleText = document.getElementById("title");
+  const authorText = document.getElementById("author");
+  const numberOfPages = document.getElementById("pages");
+  const isReadChecked = document.getElementById("checkbox");
 
-   // Validate inputs
-   if (!titleText || !authorText || !numberOfPages) {
-    alert("Please fill in all required fields.");
+  // Validate inputs
+  if (!titleText.checkValidity()) {
+    document.getElementById("titleError").textContent =
+      titleText.validationMessage;
     return; // Stop the function if any field is empty
   }
 
-  
-  // Create the various inputs for the new form
-  const title = document.createElement('h1');
-  title.classList.add('title');
-  title.textContent = titleText;
-
-  const author = document.createElement('p');
-  author.classList.add('author');
-  author.textContent = authorText;
-
-  const pages = document.createElement('p');
-  pages.classList.add('pages')
-  pages.textContent = numberOfPages;
-
-  const newDiv = document.createElement('div');
-  newDiv.classList.add('button-list');
-
-  const haveReadButton = document.createElement('button');
-  if (isReadChecked) {
-    haveReadButton.classList.add('not-read');
-    haveReadButton.textContent = 'Not Read';
-  } else {
-    haveReadButton.classList.add('have-read');
-    haveReadButton.textContent = 'Have Read';
+  if (!authorText.checkValidity()) {
+    document.getElementById("authorError").textContent =
+      authorText.validationMessage;
   }
 
-  const removeButton = document.createElement('button');
-  removeButton.classList.add('remove');
-  removeButton.textContent = 'Remove';
+  if (!numberOfPages.checkValidity()) {
+    document.getElementById("pagesError").textContent =
+      numberOfPages.validationMessage;
+  }
 
+  // Create the various inputs for the new form
+  const title = document.createElement("h1");
+  title.classList.add("title");
+  title.textContent = titleText;
+
+  const author = document.createElement("p");
+  author.classList.add("author");
+  author.textContent = authorText;
+
+  const pages = document.createElement("p");
+  pages.classList.add("pages");
+  pages.textContent = numberOfPages;
+
+  const newDiv = document.createElement("div");
+  newDiv.classList.add("button-list");
+
+  const haveReadButton = document.createElement("button");
+  if (isReadChecked) {
+    haveReadButton.classList.add("not-read");
+    haveReadButton.textContent = "Not Read";
+  } else {
+    haveReadButton.classList.add("have-read");
+    haveReadButton.textContent = "Have Read";
+  }
+
+  const removeButton = document.createElement("button");
+  removeButton.classList.add("remove");
+  removeButton.textContent = "Remove";
 
   // append buttons to newDIV
   newDiv.appendChild(haveReadButton);
@@ -128,6 +140,6 @@ submitBtn.addEventListener('click', (e) => {
   container.appendChild(newSubContainer);
 
   // hide form when clicking on submit
-  form.style.visibility = 'hidden';
-  document.querySelector('.overlay').remove();
-})
+  form.style.visibility = "hidden";
+  document.querySelector(".overlay").remove();
+});
